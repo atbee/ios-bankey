@@ -10,6 +10,9 @@ import UIKit
 
 class LoginView: UIView {
     
+    var usernameTextField = UITextField()
+    var passwordTextField = UITextField()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -31,10 +34,44 @@ extension LoginView {
     private func style() {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .green
+        
+        usernameTextField.translatesAutoresizingMaskIntoConstraints = false
+        usernameTextField.placeholder = "Username"
+        usernameTextField.delegate = self
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        passwordTextField.placeholder = "Password"
+        passwordTextField.delegate = self
+    }
+
+    private func layout() {
+        addSubview(usernameTextField)
+        addSubview(passwordTextField)
+
+        NSLayoutConstraint.activate([
+            usernameTextField.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 1),
+            usernameTextField.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1),
+            trailingAnchor.constraint(equalToSystemSpacingAfter: usernameTextField.trailingAnchor, multiplier: 1),
+            passwordTextField.topAnchor.constraint(equalToSystemSpacingBelow: usernameTextField.bottomAnchor, multiplier: 1),
+            passwordTextField.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1),
+            trailingAnchor.constraint(equalToSystemSpacingAfter: passwordTextField.trailingAnchor, multiplier: 1),
+        ])
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension LoginView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        usernameTextField.endEditing(true)
+        passwordTextField.endEditing(true)
+        return true
     }
     
-    private func layout() {
-
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
     }
 }
 
